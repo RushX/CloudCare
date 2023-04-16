@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\rsm99\Downloads\gfg_submission-main\gfg_submission-main\DChainFlaskWebServer\flask"
+VIRTUAL_ENV="F:\SELF\BlockChain\DChainFlaskWebServer\flask"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

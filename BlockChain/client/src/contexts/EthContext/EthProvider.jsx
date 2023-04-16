@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
+import NoMeta from '../../NoMeta';
 
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const [notInstalled,setNotInstalled] = useState(false);
   const init = useCallback(
     async artifact => {
       if (artifact) {
@@ -45,14 +47,20 @@ function EthProvider({ children }) {
     const handleChange = () => {
       init(state.artifact);
     };
+    try {
 
-    events.forEach(e => window.ethereum.on(e, handleChange));
-    return () => {
-      events.forEach(e => window.ethereum.removeListener(e, handleChange));
-    };
+      events.forEach(e => window.ethereum.on(e, handleChange));
+      return () => {
+        events.forEach(e => window.ethereum.removeListener(e, handleChange));
+      };
+    }
+    catch (err) {
+      setNotInstalled(true)
+    }
   }, [init, state.artifact]);
 
   return (
+    notInstalled?<NoMeta/>:
     <EthContext.Provider value={{
       state,
       dispatch
